@@ -1,24 +1,30 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Homey Test
+### Step 1: Running the Application
+```sh
+rails server
+```
+Then open `http://localhost:3000/projects/1` in your browser.
 
-Things you may want to cover:
+### Step 2: Running Tests
+```sh
+rspec
+```
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### Step 3: Default data with JSON File (`storage/project_data.json`)
+```json
+{
+  "1": {
+    "id": 1,
+    "name": "Project1",
+    "status": "Pending",
+    "comments": [],
+    "status_changes": []
+  }
+}
+```
+### Note:
+```
+1) I am using json file storage for project data.
+2) Based on id have created new project with default name Project{id}.
