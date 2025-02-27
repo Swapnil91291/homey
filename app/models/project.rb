@@ -13,6 +13,14 @@ class Project
     @status_changes = []
   end
 
+  def self.file_path
+    @file_path || FILE_PATH
+  end
+
+  def self.file_path=(path)
+    @file_path = path
+  end
+
   def self.all
     load_projects
   end
@@ -48,9 +56,9 @@ class Project
   end
 
   def self.load_projects
-    return {} unless File.exist?(FILE_PATH)
+    return {} unless File.exist?(@file_path)
     
-    JSON.parse(File.read(FILE_PATH), symbolize_names: true).transform_values do |data|
+    JSON.parse(File.read(@file_path), symbolize_names: true).transform_values do |data|
       project = Project.new(data[:id], data[:name], data[:status])
       project.comments = data[:comments] || []
       project.status_changes = data[:status_changes] || []
@@ -59,8 +67,8 @@ class Project
   end
 
   def self.save_projects(projects)
-    FileUtils.mkdir_p(File.dirname(FILE_PATH))
-    File.write(FILE_PATH, JSON.dump(projects.transform_values(&:to_h)))
+    FileUtils.mkdir_p(File.dirname(@file_path))
+    File.write(@file_path, JSON.dump(projects.transform_values(&:to_h)))
   end
 
   def to_h
